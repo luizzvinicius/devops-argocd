@@ -8,7 +8,7 @@ spec:
   source:
     path: pg-cluster
     repoURL: 'https://github.com/luizzvinicius/gitops-cnpg.git'
-    targetRevision: HEAD
+    targetRevision: main
   destination:
     namespace: default
     server: 'https://kubernetes.default.svc'

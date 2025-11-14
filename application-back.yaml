@@ -7,8 +7,11 @@ spec:
   project: default
   source:
     repoURL: https://github.com/luizzvinicius/devops-back.git
-    targetRevision: HEAD
+    targetRevision: main
     path: helm
+    helm:
+      valueFiles:
+        - values-prod.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: default
