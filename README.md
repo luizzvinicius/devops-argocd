@@ -1,17 +1,25 @@
-Implementar argo
+# Implementar argo
 
-k create namespace argocd
-k apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+Passos:
+1. `kubectl create namespace argocd`  
+2. `kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml`
 
-Aplicar ingress
+3. Aplicar ingress do argo  
+`kubectl apply -f ingress.yaml`
 
-Expor argo:
-k patch svc argocd-server -n argocd -p '{"spec": {"type": "NodePort"}}'
+4. Expor argo:  
+`kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "NodePort"}}'`
 
-Recuperar senha que é gerada automaticamente:
-k -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+5. Recuperar senha do argo que é gerada automaticamente:  
+`kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d`  
+Senha padrão: admin
+acesso na porta 32520
 
-Criar aplicação no argo e pronto
+6. Aplicar ingress nginx controller:  
+`kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.14.0/deploy/static/provider/cloud/deploy.yaml`
 
-Teste de sync:
-k scale deployment devops-front-dev --replicas=2
+7. Aplicar manifestos do Cloud native pg:  
+`kubectl apply --server-side -f \
+  https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/release-1.27/releases/cnpg-1.27.1.yaml`
+
+Criar as aplicações no argo aplicando os manifestos desse respositório.
